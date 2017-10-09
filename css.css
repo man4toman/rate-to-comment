@@ -1,0 +1,27 @@
+.commentlist span .rate:hover{
+	cursor: pointer
+}
+.commentlist span .green{
+	background: #00B508;
+	padding: 0 3px;
+	color: #ffffff;
+}
+.commentlist span .red{
+	background: #FB4F5B;
+	padding: 0 3px;
+	color: #ffffff;
+}
+.commentlist span .result{}
+.commentlist span .rateme,
+.commentlist span .dontrateme {
+	font: 16px 'Yekan';
+	padding: 1px 5px;
+	display: inline-block;
+	min-width: 15px;
+	text-align: center;
+}
+.commentlist span .rerror{
+	float: right;
+	color: #d2691e;
+	padding: 5px;
+}
