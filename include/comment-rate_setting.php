@@ -3,9 +3,9 @@ add_action('admin_menu','add_setting');
 function add_setting(){
  
 
- add_menu_page( 'comment_rate_style', 'تنظیمات استایل', 'manage_options', 'c_setting', 'comment_rate_setting');
+ add_menu_page( 'comment_rate_style', 'تنظیمات استایل', 'manage_options', 'c_setting', 'wpcr_comment_rate_setting');
 }
-function comment_rate_setting(){
+function wpcr_comment_rate_setting(){
     $rate_option=get_option('comment_rate_option',array())
     ?>
     <form method="post">
@@ -126,11 +126,11 @@ if(isset($_POST['comment_rate_save']))
     $val['fav_cat_location']  = $_POST['fav_cat_location'];
     update_option('comment_rate_option', $val);
 
-    add_action( 'admin_notices', 'my_notice' );
+    add_action( 'admin_notices', 'wpcr_notice' );
  
 }
 /**************************/
-function my_notice() {
+function  wpcr_notice() {
     ?>
     <div class="updated">
         <p><?php echo "تنظیمات ذخیره شد."; ?></p>
