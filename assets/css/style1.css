@@ -1,0 +1,8 @@
+.comment-list span.rateme_btn:before {
+    font-family: FontAwesome;
+	content:"\f0a7";
+	}
+	.comment-list span.rateme_btn.pos:before {
+	content: "\f0a6";
+
+	}
