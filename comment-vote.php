@@ -17,11 +17,11 @@ include_once('include/comment-rate_setting.php');
 $rate_option=get_option('comment_rate_option',array());
 global $rate_option;
 
-add_action( 'wp_enqueue_scripts', 'add_comment_rate_css' );
-function add_comment_rate_css() {
+add_action( 'wp_enqueue_scripts', 'wpcr_add_comment_rate_css' );
+function wpcr_add_comment_rate_css() {
   global $rate_option;
   $rate_style=get_option('rate_style');
-	wp_enqueue_style( 'comment_rate_css',plugins_url( '/assets/css/css.css', __FILE__ ) );
+	wp_enqueue_style( 'wpcr_comment_rate_css',plugins_url( '/assets/css/comment-vote.css', __FILE__ ) );
 
 	if ( 'style1' === $rate_option['rate_style'] ) {
     wp_enqueue_style( 'comment_rate_awesome', plugins_url( '/assets/css/font-awesome.min.css', __FILE__ ) );
@@ -39,8 +39,8 @@ function add_comment_rate_css() {
 wp_enqueue_script( 'comment-ajax-handle', plugins_url( '/assets/js/comment.js', __FILE__ ), array( 'jquery' ) );
 wp_localize_script( 'comment-ajax-handle', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
  
-add_action( 'wp_ajax_the_comment_ajax_hook', 'the_comment_action_function' );
-add_action( 'wp_ajax_nopriv_the_comment_ajax_hook', 'the_comment_action_function' );
+add_action( 'wp_ajax_the_comment_ajax_hook', 'wpcr_the_comment_action_function' );
+add_action( 'wp_ajax_nopriv_the_comment_ajax_hook', 'wpcr_the_comment_action_function' );
 
 
 #***************************************************
@@ -48,7 +48,7 @@ add_action( 'wp_ajax_nopriv_the_comment_ajax_hook', 'the_comment_action_function
 #***************************************************
 
 //if ( 'after_text' === $rate_option['like_location'] || 'before_text' === $rate_option['like_location'] ) {
-  function wb_comment_rate ($comment) {
+  function wpcr_wb_comment_rate ($comment) {
     global $comment,$rate_option;
   if(!is_admin()){
     if(empty($rate_option['like_type'])) $rate_option['like_type']='pos';
@@ -75,14 +75,14 @@ add_action( 'wp_ajax_nopriv_the_comment_ajax_hook', 'the_comment_action_function
   }
   return $comment->comment_content;
   }
-  add_filter( 'comment_text', 'wb_comment_rate' ); 
+  add_filter( 'comment_text', 'wpcr_wb_comment_rate' ); 
 //}
 
 #***************************************************
 #
 #***************************************************
 
-function the_comment_action_function(){
+function wpcr_the_comment_action_function(){
 	global $rate_option;
   $income = explode('|', $_POST['rateval']);
   $controller = $income[0];
@@ -155,11 +155,11 @@ function the_comment_action_function(){
 if ( 'post' === $rate_option['add_fav'] || 'both' === $rate_option['add_fav'] ) {
   
   if ( 'after_p_title' === $rate_option['fav_post_location'] || 'before_p_title' === $rate_option['fav_post_location'] ) { 
-    add_filter('the_title','favorite_the_posts');
+    add_filter('the_title','wpcr_favorite_the_posts');
   }else if ( 'after_p_content' === $rate_option['fav_post_location'] || 'before_p_content' === $rate_option['fav_post_location'] ) { 
-    add_filter('the_content','favorite_the_posts');
+    add_filter('the_content','wpcr_favorite_the_posts');
   }
-  function favorite_the_posts($content){
+  function wpcr_favorite_the_posts($content){
       global $rate_option;
 
       if(empty($rate_option['fav_post_location'])) $rate_option['fav_post_location']='after_p_title';
@@ -191,10 +191,10 @@ if ( 'post' === $rate_option['add_fav'] || 'both' === $rate_option['add_fav'] ) 
 #***************************************************
 #
 #***************************************************
-add_action( 'wp_ajax_add_fav_post', 'add_fav_post' );
-add_action( 'wp_ajax_nopriv_add_fav_post', 'add_fav_post' );
+add_action( 'wp_ajax_wpcr_add_fav_post', 'wpcr_add_fav_post' );
+add_action( 'wp_ajax_nopriv_wpcr_add_fav_post', 'wpcr_add_fav_post' );
 
-function add_fav_post(){
+function wpcr_add_fav_post(){
   $post_id=$_POST['post_id'];
   $pos=$_POST['fav_val'];
 
@@ -225,11 +225,11 @@ echo $submit;
 if ( 'cat' === $rate_option['add_fav'] || 'both' === $rate_option['add_fav'] ) {
   
   if ( 'after_cat_title' === $rate_option['fav_cat_location'] || 'before_cat_title' === $rate_option['fav_cat_location'] ) { 
-    add_filter('single_cat_title','favorite_the_cats');
-   // add_filter('the_archive_title','favorite_the_cats');
+    add_filter('single_cat_title','wpcr_favorite_the_cats');
+   // add_filter('the_archive_title','wpcr_favorite_the_cats');
   }
 
-  function favorite_the_cats($content){
+  function wpcr_favorite_the_cats($content){
       global $rate_option;
 
       if(empty($rate_option['fav_post_location'])) $rate_option['fav_post_location']='after_p_title';
@@ -261,8 +261,8 @@ if ( 'cat' === $rate_option['add_fav'] || 'both' === $rate_option['add_fav'] ) {
 #***************************************************
 #
 #***************************************************
-add_action( 'wp_ajax_add_fav_cat', 'add_fav_cat' );
-add_action( 'wp_ajax_nopriv_add_fav_cat', 'add_fav_cat' );
+add_action( 'wp_ajax_wpcr_add_fav_cat', 'wpcr_add_fav_cat' );
+add_action( 'wp_ajax_nopriv_wpcr_add_fav_cat', 'wpcr_add_fav_cat' );
 
 function add_fav_cat(){
   $term_id=$_POST['term_id'];
@@ -291,15 +291,15 @@ echo $submit;
 #***************************************************
 #
 #***************************************************
-add_filter( 'manage_edit-comments_columns', 'add_columns_head' );
-function add_columns_head( $defaults ) {
+add_filter( 'manage_edit-comments_columns', 'wpcr_add_columns_head' );
+function wpcr_add_columns_head( $defaults ) {
     $defaults['pos'] = 'رای مثبت';
     $defaults['neg'] = 'رای منفی';
     return $defaults;
 }
 
-add_action('manage_comments_custom_column', 'add_columns_content', 10, 2);
-function add_columns_content($column_name, $post_ID) { 
+add_action('manage_comments_custom_column', 'wpcr_add_columns_content', 10, 2);
+function wpcr_add_columns_content($column_name, $post_ID) { 
      global $comment;
     if ( $column_name == 'pos' ) {
         $postid=$comment->comment_ID;
@@ -317,12 +317,12 @@ function add_columns_content($column_name, $post_ID) {
 #***************************************************
 #
 #***************************************************
-function add_comment_metabox(){
-  add_meta_box( 'add_meta_title1', 'امتیاز دیدگاه ها', 'comment_metabox', 'comment', 'normal' );
+function wpcr_add_comment_metabox(){
+  add_meta_box( 'add_meta_title1', 'امتیاز دیدگاه ها', 'wpcr_comment_metabox', 'comment', 'normal' );
 }
-add_action( 'add_meta_boxes', 'add_comment_metabox' );
+add_action( 'add_meta_boxes', 'wpcr_add_comment_metabox' );
 
-function comment_metabox(){
+function wpcr_comment_metabox(){
   global $comment;
   $commentid_pos=get_comment_meta( $comment->comment_ID, '_pos', true );
   $commentid_neg=get_comment_meta( $comment->comment_ID, '_neg', true );
@@ -344,9 +344,9 @@ function comment_metabox(){
   <?php
 }
 
-add_action( 'edit_comment', 'save_comment_meta' );
+add_action( 'edit_comment', 'wpcr_save_comment_meta' );
 
-function save_comment_meta( $comment_id ) {
+function wpcr_save_comment_meta( $comment_id ) {
   update_comment_meta(   $comment_id, '_pos',$_POST['c_pos'] );
   update_comment_meta(   $comment_id, '_neg',$_POST['c_neg'] );
 
