@@ -1,0 +1,62 @@
+.comment-list span.rateme_btn:hover{
+	cursor: pointer
+}
+.comment-list #rateme{
+	float:left;
+}
+.comment-list span.rateme_btn:before {
+	font-family: dashicons;
+	content: "\f460";
+	padding: 2px;
+	margin-left: 3px;
+	margin-right: 3px;
+	height: 25px !important;
+	width: 25px !important;
+	background:#f84237; 
+	color: #fff;
+	display: inline-block;
+	font: normal 20px;
+	vertical-align: top;
+	}
+	.comment-list span.rateme_btn.pos:before {
+	content: "\f132";
+	background:#00B508!important; 
+	color: #fff;
+	}
+/*.comment-list span.rateme_btn.pos{
+	color: #00B508 !important;
+}*/
+.comment-list span.rate.green{
+	color: #00B508;
+	padding: 0 3px;
+}
+.comment-list span.rate.red{
+	color: #f84237;
+	padding: 0 3px;
+}
+.comment-list span.rateme_btn,
+.comment-list span .dontrateme {
+	font: 16px;
+	display: inline-block;
+	min-width: 15px;
+	text-align: center;
+}
+.comment-list span.rerror{
+	color: #f84237;
+	padding: 5px;
+	font-size: 12px;
+}
+.favoritebtn:hover,.cat_fav_btn:hover{
+	cursor: pointer;
+}
+.favoritebtn:before,.cat_fav_btn:before{
+	font-family: dashicons;
+	content: "\f487";
+	color: #CFCDCD;
+	display: inline-block;
+	font: normal 20px;
+	vertical-align: top;
+}
+.favoritebtn.fav:before,.cat_fav_btn.fav:before{
+	color: #f84237;
+}
